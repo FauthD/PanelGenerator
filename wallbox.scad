@@ -20,7 +20,7 @@ module mounting_posts(screws, dept, thickness)
 
 module mounting_post_holes(screws, dept, thickness)
 {
-	screw_hole=screws[2]-1;
+	screw_hole=screws[2]-1.5;
 	for (x=[screws[0], -screws[0]])
 	{
 		for (y=[screws[1], -screws[1]])
@@ -62,11 +62,27 @@ module body(outer, thickness, screws)
 	}
 	translate([0,0, 3*outer.z/8])
 		mounting_posts(screws, outer.z/4, thickness);
+
+	// improve holding better in the gypsum
+	translate([0,0, -outer[2]/2 + 0.5/2])
+		cube([outer[0]+1, outer[1]+1, 0.5], center=true);
+
+	// enforce
+	if (outer[1] > 80)
+	{
+		for (n=[1,-1])
+		{
+			s1=5+thickness;
+			s2=3;
+			translate([n*(outer[0]/2 - s1/4), 0, -outer[2]/4])
+				cube([s1, s2, outer[2]/2], center=true);
+		}
+	}
 }
 
 PipeDiameter = 21.5;
-PipeDistance = 1;
-PipeOffset = 10;
+PipeDistance = 1.0;
+PipeOffset = 11.0;
 
 module box(outer, thickness, screws)
 {
