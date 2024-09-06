@@ -73,7 +73,24 @@
             "bracket_width": "15.0",
             "screw_offset": "0.0"
         },
-        "Jung_LS990_1_1_ForFrame_Box": {
+        "Jung_LS990_1_4_Box": {
+            "WhatToPrint": "box",
+            "BoxThickness": "1.8",
+            "BoxInset": "4",
+            "BoxDept": "70",
+            "bottom_soffit": "true",
+            "height_padding": "8.1125",
+            "screw_hole_diameter": "4.0",
+            "mounting_brackets": "true",
+            "num_jacks": "2",
+            "num_rows": "2",
+            "screw_head_diameter": "7",
+            "top_soffit": "true",
+            "width_padding": "7.7625",
+            "bracket_width": "10.25",
+            "screw_offset": "0.0"
+        },
+            "Jung_LS990_1_1_ForFrame_Box": {
             "WhatToPrint": "box",
             "BoxThickness": "1.8",
             "BoxInset": "9",
