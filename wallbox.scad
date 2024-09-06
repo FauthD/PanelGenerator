@@ -46,7 +46,8 @@ module PipeHole(dia, h)
 {
 	holder=1;
 	ring(dia, holder, h);
-	ring(dia/2, holder, h);
+	// Note: The second smaller ring slows down the preview a lot
+	// ring(dia/2, holder, h);
 }
 
 module body(outer, thickness, screws)
@@ -84,12 +85,21 @@ module box(outer, thickness, screws)
 		// small side
 		for (w=[outer[0]/4, -outer[0]/4])
 		{
-			translate([w, 0, PipeOffset])
+			translate([w, 0, 0])
 			rotate([90,0,0])
 				PipeHole(PipeDiameter, 3*outer[0]);
 		}
 		// long side
-		if (outer[1] > 3*(PipeDiameter+PipeDistance) + 4*thickness)
+		if (outer[1] > 5*(PipeDiameter+PipeDistance) + 4*thickness)
+		{
+			for (w=[0, PipeDiameter+PipeDistance, -PipeDiameter-PipeDistance, 2*(PipeDiameter+PipeDistance), -2*(PipeDiameter+PipeDistance)])
+			{
+				translate([0, w, PipeOffset])
+				rotate([90,0,90])
+					PipeHole(PipeDiameter, 3*outer[0]);
+			}
+		}
+		else if (outer[1] > 3*(PipeDiameter+PipeDistance) + 4*thickness)
 		{
 			for (w=[0, PipeDiameter+PipeDistance, -PipeDiameter-PipeDistance])
 			{

@@ -10,9 +10,9 @@ DEPS =
 OUTPUTDIR=STL
 IMAGEDIR =PNG
 
-#OPENSCAD ?= openscad-nightly --enable=fast-csg --enable=lazy-union 
+OPENSCAD ?= openscad-nightly --enable=manifold --enable=lazy-union 
 #--enable=fast-csg-trust-corefinement 
-OPENSCAD ?= openscad
+#OPENSCAD ?= openscad
 
 # Hopefully there is no need to change something below
 ###########################################################
