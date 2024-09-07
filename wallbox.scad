@@ -25,7 +25,7 @@ module mounting_post_holes(screws, dept, thickness)
 	{
 		for (y=[screws[1], -screws[1]])
 		{
-			translate([x,y,0])
+			translate([x,y, -dept/2+Epsilon])
 				cylinder(d=screw_hole, h=dept, center=true);
 		}
 	}
@@ -39,6 +39,11 @@ module ring(dia, wall, h)
 		cylinder(d=dia-wall, h=3*h, center=true);
 		cube([dia, wall, 3*h], center=true);
 		cube([wall, dia, 3*h], center=true);
+		rotate([0,0,45])
+		{
+			cube([dia, wall, 3*h], center=true);
+			cube([wall, dia, 3*h], center=true);
+		}
 	}
 }
 
@@ -78,11 +83,44 @@ module body(outer, thickness, screws)
 				cube([s1, s2, outer[2]/2], center=true);
 		}
 	}
+	if (BubbleLevelHelper)
+	{
+		h = 7;
+		w = 4;
+		for (n=[1,-1])
+		{
+			difference()
+			{
+				translate([w/2, n*(outer[1]/2-thickness/4), outer[2]/2+h/2])
+					cube([w, thickness/2, h], center=true);
+			}
+		}
+	}
 }
 
 PipeDiameter = 21.5;
 PipeDistance = 1.0;
 PipeOffset = 11.0;
+
+module PipeHoles(lenght, width, thickness, rot)
+{
+	num = floor((lenght-PipeDiameter/2) / (PipeDiameter+PipeDistance + 4*thickness));
+	offset = lenght - num * (PipeDiameter+PipeDistance);
+	for (n=[-1,1])
+	{
+		for (w=[0:num])
+		{
+			if(rot[1]==0)
+				translate([n*width/2, w * (PipeDiameter+PipeDistance) - lenght/2 + offset/2, PipeOffset])
+					rotate(rot)
+						PipeHole(PipeDiameter, 3*thickness);
+			else
+				translate([ w * (PipeDiameter+PipeDistance) - lenght/2 + offset/2, n*width/2, 0])
+					rotate(rot)
+						PipeHole(PipeDiameter, 3*thickness);
+		}
+	}
+}
 
 module box(outer, thickness, screws)
 {
@@ -90,7 +128,7 @@ module box(outer, thickness, screws)
 	{
 		body(outer, thickness, screws);
 		translate([0,0, outer.z/2])
-			mounting_post_holes(screws, outer.z/2+Epsilon, thickness);
+			mounting_post_holes(screws, outer.z/4, thickness);
 		
 		// bottom
 		for (w=[0, outer[1]/4, -outer[1]/4])
@@ -99,39 +137,8 @@ module box(outer, thickness, screws)
 				PipeHole(PipeDiameter, outer.z/2);
 		}
 		// small side
-		for (w=[outer[0]/4, -outer[0]/4])
-		{
-			translate([w, 0, 0])
-			rotate([90,0,0])
-				PipeHole(PipeDiameter, 3*outer[0]);
-		}
+		PipeHoles(outer[0], outer[1], thickness, [90,90,0]);
 		// long side
-		if (outer[1] > 5*(PipeDiameter+PipeDistance) + 4*thickness)
-		{
-			for (w=[0, PipeDiameter+PipeDistance, -PipeDiameter-PipeDistance, 2*(PipeDiameter+PipeDistance), -2*(PipeDiameter+PipeDistance)])
-			{
-				translate([0, w, PipeOffset])
-				rotate([90,0,90])
-					PipeHole(PipeDiameter, 3*outer[0]);
-			}
-		}
-		else if (outer[1] > 3*(PipeDiameter+PipeDistance) + 4*thickness)
-		{
-			for (w=[0, PipeDiameter+PipeDistance, -PipeDiameter-PipeDistance])
-			{
-				translate([0, w, PipeOffset])
-				rotate([90,0,90])
-					PipeHole(PipeDiameter, 3*outer[0]);
-			}
-		}
-		else
-		{
-			for (w=[outer[1]/4, -outer[1]/4])
-			{
-				translate([0, w, PipeOffset])
-				rotate([90,0,90])
-					PipeHole(PipeDiameter, 3*outer[0]);
-			}
-		}
+		PipeHoles(outer[1], outer[0], thickness, [90,0,90]);
 	}
 }

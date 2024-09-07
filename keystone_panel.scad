@@ -65,9 +65,15 @@ bottom_soffit = true;
 /***************/
 
 /* [Wall box] */
+// Material thickness
 BoxThickness = 1.8;
+// How deep is the inner hole
 BoxDept = 70;
+// Make box smaller than panel
 BoxInset = 7;
+
+// Add a place to press the bubble level against. Cut it off after use.
+BubbleLevelHelper = true;
 
 /* [Hidden] */
 
