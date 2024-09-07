@@ -68,6 +68,7 @@ bottom_soffit = true;
 BoxThickness = 1.8;
 BoxDept = 70;
 BoxInset = 7;
+BubbleLevelHelper = true;
 
 /* [Hidden] */
 
