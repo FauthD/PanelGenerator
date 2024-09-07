@@ -79,8 +79,9 @@ module body(outer, thickness, screws)
 		{
 			s1=5+thickness;
 			s2=3;
-			translate([n*(outer[0]/2 - s1/4), 0, -outer[2]/4])
-				cube([s1, s2, outer[2]/2], center=true);
+			l=outer[2]/2-3;
+			translate([n*(outer[0]/2 - s1/4), 0, -outer[2]/2+l/2])
+				cube([s1, s2, l], center=true);
 		}
 	}
 	if (BubbleLevelHelper)
@@ -100,7 +101,7 @@ module body(outer, thickness, screws)
 
 PipeDiameter = 21.5;
 PipeDistance = 1.0;
-PipeOffset = 11.0;
+PipeOffset = 9.0;
 
 module PipeHoles(lenght, width, thickness, rot)
 {
