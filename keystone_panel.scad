@@ -6,7 +6,7 @@
 	Lots of other improvements.
 	Changed the way a panel is setup so it fits to my needs.
 	Drawback is that a std. 19" panel is a bit more difficuölt to create,
-	but my panels are mucgh easier.
+	but my panels are much easier.
 */
 
 /*
@@ -39,6 +39,8 @@ width_padding = 6.5625;	//[6.0:0.01:40.0]
 panel_length=80.0;
 panel_width=130.0;
 
+rounding = 1.0;	// [0.01:0.1:10]
+
 // in mm
 screw_hole_diameter = 4.0;	//[2.0:0.1:6.0]
 // Set head diamet to 0 for no screws
@@ -47,6 +49,8 @@ screw_head_diameter = 7.0;	//[0.0:0.1:11.0]
 screw_hole_width = 110;
 screw_hole_lenght = 60;
 
+// Allow for mounting tolereances
+use_sloted_hole=true;
 
 /* 
  *  The soffits are the overhangs that make the front of the faceplate
@@ -59,7 +63,7 @@ bottom_soffit = true;
 
 EmulateFrame = false;
 SlotWidth = 1.1;	
-SlotDistance = 4.5;
+SlotDistance = 4.1;
 SlotDept=4;
 
 /* [Wall box] */
@@ -105,6 +109,8 @@ Epsilon = 0.01;
 epsilon = Epsilon;
 
 include <./wallbox.scad>
+use <./SlottedHole.scad>
+use <./RoundCornersCube.scad>
 
 module show_values()
 {
@@ -172,16 +178,6 @@ module keystone()
 	}
 }
 
-module mounting_bracket_hole(length, width, screw_offset)
-{
-	translate([0, screw_offset, 0])
-	{
-		cylinder(r = screw_hole_diameter / 2, h = 3*wall_height, center=true);
-		translate([0,0,wall_height/2])
-			cylinder(r = screw_head_diameter / 2, h = wall_height, center=true);
-	}
-}
-
 module mounting_holes()
 {
 	// Draw the mounting holes
@@ -191,9 +187,19 @@ module mounting_holes()
 		{
 			translate([j*screw_hole_lenght/2, i*screw_hole_width/2, 0])
 			{
-				cylinder(r = screw_hole_diameter / 2, h = 3*wall_height, center=true);
-				translate([0,0,wall_height])
-					cylinder(r = screw_head_diameter / 2, h = wall_height, center=true);
+				if (use_sloted_hole)
+				{
+					l=1.5;
+					SlottedHole(d = screw_hole_diameter, h = 3*wall_height, length=l*screw_hole_diameter);
+					translate([0,0,wall_height/2])
+						SlottedHole(d = screw_head_diameter, h = wall_height, length=l*screw_head_diameter);
+				}
+				else
+				{
+					cylinder(d = screw_hole_diameter, h = 3*wall_height, center=true);
+					translate([0,0,wall_height])
+						cylinder(d = screw_head_diameter, h = wall_height, center=true);
+				}
 			}
 		}
 	}
@@ -205,7 +211,7 @@ module raw_panel()
 	difference()
 	{
 		translate([0, 0, wall_height/2])
-			cube([panel_length, panel_width, wall_height], center=true);
+			RoundCornersCube([panel_length, panel_width, wall_height], center=true, r=rounding);
 
 		translate([-num_rows*outer_length/2, -num_jacks*outer_width/2, 0])
 		{
@@ -244,12 +250,11 @@ module panel()
 
 		if(EmulateFrame)
 		{
-			for (n=[1,-1])
+			translate([0,0, wall_height-SlotDept/2+Epsilon])
+			difference()
 			{
-				translate([n*(panel_length/2-SlotDistance), 0, wall_height-SlotDept/2])
-					cube([SlotWidth, panel_width-2*SlotDistance, SlotDept+Epsilon], center=true);
-				translate([0, n*(panel_width/2-SlotDistance), wall_height-SlotDept/2])
-					cube([panel_length-2*SlotDistance+SlotWidth, SlotWidth, SlotDept+Epsilon], center=true);
+				cube([panel_length-2*SlotDistance, panel_width-2*SlotDistance, SlotDept+Epsilon], center=true);
+				RoundCornersCube([panel_length-2*SlotDistance-2*SlotWidth, panel_width-2*SlotDistance-2*SlotWidth, SlotDept], center=true, r=rounding);
 			}
 		}
 	}

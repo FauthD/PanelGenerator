@@ -4,7 +4,9 @@ TARGETNAME=keystone_panel
 
 # scad files that are included (include or use)
 DEPS =
-# DEPS+=dfLibscad/Revision.scad
+DEPS+=wallbox.scad
+DEPS+=SlottedHole.scad
+DEPS+=RoundCornersCube.scad
 
 # Results
 OUTPUTDIR=STL

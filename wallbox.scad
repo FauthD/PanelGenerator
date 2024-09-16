@@ -58,12 +58,13 @@ module PipeHole(dia, h)
 module body(outer, thickness, screws)
 {
 	inner = [outer.x-2*thickness, outer.y-2*thickness, outer.z];
+	r=3;
 	echo(outer);
 	difference()
 	{
-		cube(size=outer, center=true);
+		RoundCornersCube(size=outer, center=true, r=r);
 		translate([0,0, thickness])
-			cube(size=inner, center=true);
+			RoundCornersCube(size=inner, center=true, r=r);
 	}
 	translate([0,0, 3*outer.z/8])
 		mounting_posts(screws, outer.z/4, thickness);

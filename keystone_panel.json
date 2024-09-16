@@ -27,6 +27,7 @@
             "screw_hole_diameter": "4.0",
             "screw_hole_lenght": "0",
             "screw_hole_width": "131.0",
+            "use_sloted_hole": "true",
             "top_soffit": "true",
             "width_padding": "6.5625"
         },
@@ -61,6 +62,7 @@
             "screw_hole_diameter": "4.0",
             "screw_hole_lenght": "0",
             "screw_hole_width": "128",
+            "use_sloted_hole": "true",
             "top_soffit": "true",
             "width_padding": "6.5625"
         },
@@ -79,6 +81,7 @@
             "screw_hole_diameter": "4.0",
             "screw_hole_lenght": "0",
             "screw_hole_width": "60.0",
+            "use_sloted_hole": "true",
             "top_soffit": "true",
             "width_padding": "6.5625"
         },
@@ -114,6 +117,7 @@
             "screw_hole_diameter": "4.0",
             "screw_hole_lenght": "0",
             "screw_hole_width": "60.0",
+            "use_sloted_hole": "true",
             "top_soffit": "true",
             "width_padding": "6.5625"
         },
