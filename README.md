@@ -15,13 +15,13 @@ Find the .stl files in the STL folder.
 
 | Panel for 4 keystones with Jung LS990 frame emulation | In wall box | A real photo | |
 | :----: | :----: | :----: | :----: |
-|![Panel for 4 keystones with Jung frame emulation](PNG/Jung_LS990_1_4.png) | ![In wall box for 4 keystones](PNG/Jung_LS990_1_4_Box.png) | TBD | Screw distance is 60mm, but off the shelf boxes are probably too small.|
+|![Panel for 4 keystones with Jung frame emulation](PNG/Jung_LS990_1_4.png) | ![In wall box for 4 keystones](PNG/Jung_LS990_1_4_Box.png) | TBD | Screw distance is 60mm, but "off the shelf" boxes are probably too small.|
 
 | Panel for 1 keystone fits to a real Jung LS990 frame | In wall box | A real photo | |
 | :----: | :----: | :----: | :----: |
-|![Panel for 1 keystone for Jung LS990 frame](PNG/Jung_LS990_1_1_ForFrame.png) | ![In wall box for 1 keystone](PNG/Jung_LS990_1_4_Box.png) | TBD | Screw distance is 60mm so it should also fit into regular boxes (64mm dept). Fits into a regular Jung LS990 single frame. Or use the box for the 1_4 flavour.|
+|![Panel for 1 keystone for Jung LS990 frame](PNG/Jung_LS990_1_1_ForFrame.png) | ![In wall box for 1 keystone](PNG/Jung_LS990_1_4_Box.png) | TBD | Fits into a regular Jung LS990 frame. Screw distance is 60mm so it should also fit into regular boxes (64mm dept).  Or use the box for the 1_4 flavour.|
 
 | Panel for 1 keystone fits to a real Jung LS990 frame | In wall box | A real photo | |
 | :----: | :----: | :----: | :----: |
-|![Panel for 1 keystone for Jung LS990 frame, no screws](PNG/Jung_LS990_1_1_ForFrameNoScrews.png) | ![In wall box for 1 keystone without mounting screws](PNG/Jung_LS990_1_4_Box.png) | TBD | You need to glue it to the frame somehow. Screw distance is 60mm so it should also fit into regular boxes (64mm dept). Fits into a regular Jung LS990 single frame. Or use the box for the 1_4 flavour. |
+|![Panel for 1 keystone for Jung LS990 frame, no screws](PNG/Jung_LS990_1_1_ForFrameNoScrews.png) | ![In wall box for 1 keystone without mounting screws](PNG/Jung_LS990_1_4_Box.png) | TBD | You need to glue it to the frame somehow. Fits into a regular Jung LS990 frame. Screw distance is 60mm so it should also fit into regular boxes (64mm dept).  Or use the box for the 1_4 flavour. |
 
