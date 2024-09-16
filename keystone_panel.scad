@@ -255,6 +255,17 @@ module raw_panel()
 			}
 		}
 	}
+
+	if(wall_distance > 0)
+	{
+		difference()
+		{
+			translate([0,0,-wall_distance/2])
+				RoundCornersCube([panel_length, panel_width, wall_distance], center=true, r=rounding);
+			translate([0,0,-wall_distance/2])
+				RoundCornersCube([panel_length-2*cover_thickness, panel_width-2*cover_thickness, wall_distance+Epsilon], center=true, r=rounding);
+		}
+	}
 }
 
 module panel()
