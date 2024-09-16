@@ -4,6 +4,9 @@
 	Made hidden real Hidden.
 	Add Epsilon.
 	Lots of other improvements.
+	Changed the way a panel is setup so it fits to my needs.
+	Drawback is that a std. 19" panel is a bit more difficuölt to create,
+	but my panels are mucgh easier.
 */
 
 /*
@@ -17,20 +20,6 @@
  *  Shawn Wilson
  *  Aug 27, 2016
  */
- 
-/****************
- * Modify the settings below accordingly.  
- * 
- * For example, the following values will make a 16 port patch panel 
- * that can be mounted in a standard 19in rack:
- *
- *  num_jacks = 16;
- *  num_rows = 1;
- *  wall_thickness_x = 6.5625;
- *  wall_thickness_y = 6.5625;
- *  mounting_brackets = true;
- *
- ****************/
 
 /* [Print] */
 WhatToPrint = "panel"; // ["panel", "box", "mount", "cut"]
@@ -47,19 +36,17 @@ height_padding = 6.5625;	//[6.0:0.01:40.0]
 // Pad the spacing between each jack (mm).  Industry standard is 6.5625.
 width_padding = 6.5625;	//[6.0:0.01:40.0]
 
-// Specify if you want mounting holes on the sides.
-mounting_brackets = true;
-bracket_width = 15.0;	//[0.0:0.05:40.0]
-
-// Add extra space above and bejond the keystones.
-extra_padding=0.0;	// [0.0:0.05:40.0]
+panel_length=80.0;
+panel_width=130.0;
 
 // in mm
-screw_hole_diameter = 5.5;	//[2.0:0.1:6.0]
-screw_head_diameter = 9.0;	//[3.0:0.1:11.0]
-screw_offset = 0.0;	// [-30.0:0.05:30.0]
+screw_hole_diameter = 4.0;	//[2.0:0.1:6.0]
+// Set head diamet to 0 for no screws
+screw_head_diameter = 7.0;	//[0.0:0.1:11.0]
+// screw_offset = 0.0;	// [-30.0:0.05:30.0]
+screw_hole_width = 110;
+screw_hole_lenght = 60;
 
-num_mounting_screw_rows=2; // [1,2]
 
 /* 
  *  The soffits are the overhangs that make the front of the faceplate
@@ -71,7 +58,7 @@ bottom_soffit = true;
 /***************/
 
 EmulateFrame = false;
-SlotWidth = 1.2;	
+SlotWidth = 1.1;	
 SlotDistance = 4.5;
 SlotDept=4;
 
@@ -82,7 +69,6 @@ BoxThickness = 1.8;
 BoxDept = 70;
 // Make box smaller than panel
 BoxInsetLength = 1;
-BoxInsetWith = 7;
 
 // Add a place to press the bubble level against. Cut it off after use.
 BubbleLevelHelper = true;
@@ -109,10 +95,8 @@ small_clip_clearance = 6.5;
 outer_length = jack_length + big_clip_depth + (wall_thickness_x * 2);
 outer_width = jack_width + (wall_thickness_y * 2);
 
-total_outer_length_without_extra_padding = outer_length * num_rows;
-total_outer_length = total_outer_length_without_extra_padding + extra_padding;
-total_outer_width = (outer_width * num_jacks) + (mounting_brackets ? 2*bracket_width : 0);
-mount_hole_distance = (outer_width * num_jacks) + bracket_width + 2*screw_offset;
+total_outer_length = outer_length * num_rows;
+total_outer_width = (outer_width * num_jacks);
 
 png=false;
 $fa = png ? 1 : $preview ? 16 : 2;
@@ -125,8 +109,8 @@ include <./wallbox.scad>
 module show_values()
 {
 	echo ("jack width:", outer_width, "jack length:", outer_length);
-	echo ("total width:", total_outer_width, "total length", total_outer_length);
-	echo ("distance between mounting holes:", mount_hole_distance);
+	echo ("total width:", panel_width, "total length", panel_length);
+	echo ("distance between mounting holes:", screw_hole_width);
 }
 
 /*
@@ -188,11 +172,6 @@ module keystone()
 	}
 }
 
-module mounting_bracket(length, width, screw_offset)
-{
-	cube([length, width, wall_height], center=true);
-}
-
 module mounting_bracket_hole(length, width, screw_offset)
 {
 	translate([0, screw_offset, 0])
@@ -203,57 +182,52 @@ module mounting_bracket_hole(length, width, screw_offset)
 	}
 }
 
-module mounting_bracket_holes()
+module mounting_holes()
 {
 	// Draw the mounting holes
-	if(num_mounting_screw_rows==1)
+	for (j = [1,-1] )
 	{
-		translate([total_outer_length/2, -1 * bracket_width + bracket_width/2, wall_height/2])
-			mounting_bracket_hole(outer_length, bracket_width, -screw_offset);
-
-		translate([total_outer_length/2, outer_width * num_jacks + bracket_width/2, wall_height/2]) 
-			mounting_bracket_hole(outer_length, bracket_width, screw_offset);
-	}
-	else
-	{
-		for (j = [0 : num_mounting_screw_rows - 1] )
+		for (i = [1,-1] )
 		{
-			translate([j * outer_length + outer_length/2, -1 * bracket_width + bracket_width/2, wall_height/2])
-				mounting_bracket_hole(outer_length, bracket_width, -screw_offset);
-
-			translate([j * outer_length + outer_length/2, outer_width * num_jacks + bracket_width/2, wall_height/2]) 
-				mounting_bracket_hole(outer_length, bracket_width, screw_offset);
+			translate([j*screw_hole_lenght/2, i*screw_hole_width/2, 0])
+			{
+				cylinder(r = screw_hole_diameter / 2, h = 3*wall_height, center=true);
+				translate([0,0,wall_height])
+					cylinder(r = screw_head_diameter / 2, h = wall_height, center=true);
+			}
 		}
 	}
 }
 
 module raw_panel()
 {
-		/* Draw the patch panel. */
-	for (j = [0 : num_rows - 1] )
+	// Draw the patch panel.
+	difference()
 	{
-		for (i = [0 : num_jacks - 1] )
-		{
-			translate([j * outer_length, i * outer_width, 0])
-				keystone();
-		}
+		translate([0, 0, wall_height/2])
+			cube([panel_length, panel_width, wall_height], center=true);
 
-		/* Add some mounting brackets if requested. */
-		if (mounting_brackets)
+		translate([-num_rows*outer_length/2, -num_jacks*outer_width/2, 0])
 		{
-			translate([j * outer_length + outer_length/2, -1 * bracket_width + bracket_width/2, wall_height/2])
-				mounting_bracket(outer_length, bracket_width, -screw_offset);
-
-			translate([j * outer_length + outer_length/2, outer_width * num_jacks + bracket_width/2, wall_height/2]) 
-				mounting_bracket(outer_length, bracket_width, screw_offset);
-		}
-		if(extra_padding>0.0)
-		{
-			outer = total_outer_length_without_extra_padding;
-			for (n=[-1,1])
+			for (j = [0 : num_rows - 1] )
 			{
-				translate([n*(outer/2+extra_padding/4)+outer/2, total_outer_width/2-bracket_width, wall_height/2])
-					cube([extra_padding/2, total_outer_width, wall_height], center=true);
+				for (i = [0 : num_jacks - 1] )
+				{
+					translate([j * outer_length, i * outer_width, -wall_height])
+						cube([outer_length+Epsilon, outer_width+Epsilon, 3*wall_height]);
+				}
+			}
+		}
+	}
+
+	translate([-num_rows*outer_length/2, -num_jacks*outer_width/2, 0])
+	{
+		for (j = [0 : num_rows - 1] )
+		{
+			for (i = [0 : num_jacks - 1] )
+			{
+				translate([j * outer_length, i * outer_width, 0])
+					keystone();
 			}
 		}
 	}
@@ -263,38 +237,54 @@ module panel()
 {
 	difference()
 	{
-		translate([extra_padding/2,0,0])
-			raw_panel();
+		raw_panel();
 
-		if (mounting_brackets)
-		{
-			mounting_bracket_holes();
-		}
-		
+		if(screw_head_diameter>0)
+			mounting_holes();
+
 		if(EmulateFrame)
 		{
 			for (n=[1,-1])
 			{
-				with = total_outer_width-2*SlotDistance;
-				translate([total_outer_length/2 + n*(total_outer_length/2-SlotDistance), with/2-bracket_width+SlotDistance+SlotWidth/4, wall_height-SlotDept/2])
-					cube([SlotWidth, with+SlotWidth/2, SlotDept+Epsilon], center=true);
+				translate([n*(panel_length/2-SlotDistance), 0, wall_height-SlotDept/2])
+					cube([SlotWidth, panel_width-2*SlotDistance, SlotDept+Epsilon], center=true);
+				translate([0, n*(panel_width/2-SlotDistance), wall_height-SlotDept/2])
+					cube([panel_length-2*SlotDistance+SlotWidth, SlotWidth, SlotDept+Epsilon], center=true);
 			}
-			len = total_outer_length-2*SlotDistance+SlotWidth;
-			translate([total_outer_length/2, -bracket_width+SlotWidth/2+SlotDistance-SlotWidth/2, wall_height-SlotDept/2])
-				cube([len, SlotWidth, SlotDept+Epsilon], center=true);
-			translate([total_outer_length/2, total_outer_width-bracket_width-SlotDistance, wall_height-SlotDept/2])
-				cube([len, SlotWidth, SlotDept+Epsilon], center=true);
+		}
+	}
+}
+
+module Stones()
+{
+	color("gray", 0.5)
+	{
+		translate([-num_rows*outer_length/2, -num_jacks*outer_width/2, 0])
+		{
+			x=21.5+2;
+			y=15+2;
+			z=32+2;
+			for (j = [0 : num_rows - 1] )
+			{
+				for (i = [0 : num_jacks - 1] )
+				{
+					translate([x/2 + j * outer_length - 7, y/2 + i * outer_width - 3, -z+wall_height+Epsilon])
+						cube([x,y,z], center=false);
+				}
+			}
 		}
 	}
 }
 
 module mount()
 {
-	translate([-total_outer_length/2, -total_outer_width/2 + bracket_width, 0])
-		print("panel");
-	color("blue")
+	print("panel");
+
+	color("blue", 0.1)
 		translate([0,0, -BoxDept/2])
 			print("box");
+
+	Stones();
 }
 
 module cut()
@@ -303,10 +293,11 @@ module cut()
 	{
 		mount();
 		translate([0,0,-BoxDept/2])
-			cube([total_outer_length/2+Epsilon,total_outer_width/2+Epsilon, BoxDept ]);
-		translate([-total_outer_length/2, -total_outer_width/2,-BoxDept/2])
-			cube([total_outer_length/2+Epsilon,total_outer_width/2+Epsilon, BoxDept ]);
+			cube([panel_length/2+Epsilon, panel_width/2+Epsilon, BoxDept ]);
+		translate([-panel_length/2, -panel_width/2,-BoxDept/2])
+			cube([panel_length/2+Epsilon, panel_width/2+Epsilon, BoxDept ]);
 	}
+	Stones();
 }
 
 module print(what="panel")
@@ -317,8 +308,8 @@ module print(what="panel")
 	}
 	else if(what == "box")
 	{
-		outer = [total_outer_length-2*BoxInsetLength, total_outer_width-2*BoxInsetWith, BoxDept];
-		screws= [(num_mounting_screw_rows * outer_length - outer_length)/2, (outer_width * num_jacks + bracket_width)/2 + screw_offset, screw_hole_diameter];
+		outer = [panel_length-2*BoxInsetLength, screw_hole_width+BoxThickness, BoxDept];
+		screws= [screw_hole_lenght, screw_hole_width, screw_hole_diameter];
 		box(outer=outer, thickness=BoxThickness, screws=screws);
 	}
 	else if(what == "mount")

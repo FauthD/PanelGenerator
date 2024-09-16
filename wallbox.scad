@@ -4,9 +4,9 @@
 module mounting_posts(screws, dept, thickness)
 {
 	screw_post=max(screws[2]*2.2, screws[2]+2*thickness);
-	for (x=[screws[0], -screws[0]])
+	for (x=[screws[0]/2, -screws[0]/2])
 	{
-		for (y=[screws[1], -screws[1]])
+		for (y=[screws[1]/2, -screws[1]/2])
 		{
 			translate([x,y,0])
 			{
@@ -21,9 +21,9 @@ module mounting_posts(screws, dept, thickness)
 module mounting_post_holes(screws, dept, thickness)
 {
 	screw_hole=screws[2]-1.5;
-	for (x=[screws[0], -screws[0]])
+	for (x=[screws[0]/2, -screws[0]/2])
 	{
-		for (y=[screws[1], -screws[1]])
+		for (y=[screws[1]/2, -screws[1]/2])
 		{
 			translate([x,y, -dept/2+Epsilon])
 				cylinder(d=screw_hole, h=dept, center=true);
@@ -49,7 +49,7 @@ module ring(dia, wall, h)
 
 module PipeHole(dia, h)
 {
-	holder=1;
+	holder=2;
 	ring(dia, holder, h);
 	// Note: The second smaller ring slows down the preview a lot
 	// ring(dia/2, holder, h);
@@ -92,20 +92,20 @@ module body(outer, thickness, screws)
 		{
 			difference()
 			{
-				translate([w/2, n*(outer[1]/2-thickness/4), outer[2]/2+h/2])
-					cube([w, thickness/2, h], center=true);
+				translate([w/2, n*(outer[1]/2-thickness/2), outer[2]/2+h/2])
+					cube([w, thickness, h], center=true);
 			}
 		}
 	}
 }
 
-PipeDiameter = 21.5;
+PipeDiameter = 22.5;
 PipeDistance = 1.0;
 PipeOffset = 9.0;
 
 module PipeHoles(lenght, width, thickness, rot)
 {
-	num = floor((lenght-PipeDiameter/2) / (PipeDiameter+PipeDistance + 4*thickness));
+	num = floor((lenght-PipeDiameter/2) / (PipeDiameter+PipeDistance + 3*thickness));
 	offset = lenght - num * (PipeDiameter+PipeDistance);
 	for (n=[-1,1])
 	{
