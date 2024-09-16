@@ -22,7 +22,7 @@
  */
 
 /* [Print] */
-WhatToPrint = "panel"; // ["panel", "box", "mount", "cut"]
+WhatToPrint = "panel"; // ["panel", "box", "cover", "mount", "cut"]
 
 /* [Sizes] */
 // Number of columns 
@@ -39,18 +39,19 @@ width_padding = 6.5625;	//[6.0:0.01:40.0]
 panel_length=80.0;
 panel_width=130.0;
 
-rounding = 1.0;	// [0.01:0.1:10]
+rounding = 1.0;	// [0.01:0.1:12.1]
 
 // in mm
 screw_hole_diameter = 4.0;	//[2.0:0.1:6.0]
-// Set head diamet to 0 for no screws
+// Set head diameter to 0 for no screws
 screw_head_diameter = 7.0;	//[0.0:0.1:11.0]
-// screw_offset = 0.0;	// [-30.0:0.05:30.0]
 screw_hole_width = 110;
 screw_hole_lenght = 60;
 
 // Allow for mounting tolereances
 use_sloted_hole=true;
+// You can use 45° with 4 holes if you want
+sloted_angle=0;	// [0,45,90]
 
 /* 
  *  The soffits are the overhangs that make the front of the faceplate
@@ -65,6 +66,19 @@ EmulateFrame = false;
 SlotWidth = 1.1;	
 SlotDistance = 4.1;
 SlotDept=4;
+
+/* [Wall distance] */
+wall_distance = 0.0; // [0.0:1:100]
+wall_distance_thickness = 2.0; // [1:0.2:4]
+
+/* [Cover] */
+use_cover=false;
+cover_space = 80.0; // [8.0:1:15.0]
+cover_screws_width = 110;
+cover_screws_length = 60;
+cover_screws_diameter = 4.0;	//[2.0:0.1:6.0]
+cover_screw_head_diameter = 7.5;	//[0.0:0.1:11.0]
+cover_thickness = 2.0; // [1:0.2:4]
 
 /* [Wall box] */
 // Material thickness
@@ -190,9 +204,12 @@ module mounting_holes()
 				if (use_sloted_hole)
 				{
 					l=1.5;
-					SlottedHole(d = screw_hole_diameter, h = 3*wall_height, length=l*screw_hole_diameter);
-					translate([0,0,wall_height/2])
-						SlottedHole(d = screw_head_diameter, h = wall_height, length=l*screw_head_diameter);
+					rotate([0,0,j*i*sloted_angle])
+					{
+						SlottedHole(d = screw_hole_diameter, h = 3*wall_height, length=l*screw_hole_diameter);
+						translate([0,0,wall_height/2])
+							SlottedHole(d = screw_head_diameter, h = wall_height, length=l*screw_head_diameter);
+					}
 				}
 				else
 				{
@@ -226,6 +243,7 @@ module raw_panel()
 		}
 	}
 
+	// Draw the keystone holders
 	translate([-num_rows*outer_length/2, -num_jacks*outer_width/2, 0])
 	{
 		for (j = [0 : num_rows - 1] )
@@ -257,6 +275,19 @@ module panel()
 				RoundCornersCube([panel_length-2*SlotDistance-2*SlotWidth, panel_width-2*SlotDistance-2*SlotWidth, SlotDept], center=true, r=rounding);
 			}
 		}
+		
+		if(use_cover)
+		{
+			h=cover_space+cover_thickness;
+			for (j = [1,-1])
+			{
+				for (i = [1,-1])
+				{
+					translate([j*cover_screws_length/2, i*cover_screws_width/2, h/2])
+						cylinder(d=cover_screws_diameter, h=3*h, center=true);
+				}
+			}
+		}
 	}
 }
 
@@ -276,6 +307,46 @@ module Stones()
 					translate([x/2 + j * outer_length - 7, y/2 + i * outer_width - 3, -z+wall_height+Epsilon])
 						cube([x,y,z], center=false);
 				}
+			}
+		}
+	}
+}
+
+module cover_raw(h)
+{
+	// Draw the cover.
+	difference()
+	{
+		translate([0, 0, h/2])
+			RoundCornersCube([panel_length, panel_width, h], center=true, r=rounding);
+
+		translate([0, 0, h/2+cover_thickness])
+			RoundCornersCube([panel_length-2*cover_thickness, panel_width-2*cover_thickness, h], center=true, r=rounding);
+	}	
+	for (j = [1,-1])
+	{
+		for (i = [1,-1])
+		{
+			translate([j*cover_screws_length/2, i*cover_screws_width/2, h/2])
+				cylinder(d=2.5*cover_screw_head_diameter, h=h, center=true);
+		}
+	}
+}
+
+module cover()
+{
+	h=cover_space+cover_thickness;
+	difference()
+	{
+		cover_raw(h);
+		for (j = [1,-1])
+		{
+			for (i = [1,-1])
+			{
+				translate([j*cover_screws_length/2, i*cover_screws_width/2, h/2-2*cover_thickness])
+					cylinder(d=cover_screw_head_diameter, h=h, center=true);
+				translate([j*cover_screws_length/2, i*cover_screws_width/2, 0])
+					cylinder(d=cover_screws_diameter, h=3*h, center=true);
 			}
 		}
 	}
@@ -316,6 +387,10 @@ module print(what="panel")
 		outer = [panel_length-2*BoxInsetLength, screw_hole_width+BoxThickness, BoxDept];
 		screws= [screw_hole_lenght, screw_hole_width, screw_hole_diameter];
 		box(outer=outer, thickness=BoxThickness, screws=screws);
+	}
+	else if(what == "cover")
+	{
+		cover();
 	}
 	else if(what == "mount")
 	{

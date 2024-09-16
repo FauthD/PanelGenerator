@@ -27,8 +27,8 @@
             "screw_hole_diameter": "4.0",
             "screw_hole_lenght": "0",
             "screw_hole_width": "131.0",
-            "use_sloted_hole": "true",
             "top_soffit": "true",
+            "use_sloted_hole": "true",
             "width_padding": "6.5625"
         },
         "Jung_LS990_2_8_Box": {
@@ -62,8 +62,8 @@
             "screw_hole_diameter": "4.0",
             "screw_hole_lenght": "0",
             "screw_hole_width": "128",
-            "use_sloted_hole": "true",
             "top_soffit": "true",
+            "use_sloted_hole": "true",
             "width_padding": "6.5625"
         },
         "Jung_LS990_1_4": {
@@ -81,8 +81,8 @@
             "screw_hole_diameter": "4.0",
             "screw_hole_lenght": "0",
             "screw_hole_width": "60.0",
-            "use_sloted_hole": "true",
             "top_soffit": "true",
+            "use_sloted_hole": "true",
             "width_padding": "6.5625"
         },
         "Jung_LS990_1_4_Box": {
@@ -117,8 +117,8 @@
             "screw_hole_diameter": "4.0",
             "screw_hole_lenght": "0",
             "screw_hole_width": "60.0",
-            "use_sloted_hole": "true",
             "top_soffit": "true",
+            "use_sloted_hole": "true",
             "width_padding": "6.5625"
         },
         "Jung_LS990_1_1_ForFrameNoScrews": {
@@ -137,6 +137,44 @@
             "screw_hole_width": "60.0",
             "top_soffit": "true",
             "width_padding": "6.5625"
+        },
+        "InWall_180_180_50": {
+            "EmulateFrame": "false",
+            "WhatToPrint": "panel",
+            "bottom_soffit": "true",
+            "cover_screws_length": "160",
+            "cover_screws_width": "160",
+            "num_jacks": "4",
+            "num_rows": "4",
+            "panel_length": "180",
+            "panel_width": "180",
+            "rounding": "10.01",
+            "screw_head_diameter": "7",
+            "screw_hole_diameter": "4",
+            "screw_hole_lenght": "137",
+            "screw_hole_width": "137",
+            "sloted_angle": "45",
+            "top_soffit": "true",
+            "use_cover": "true",
+            "use_sloted_hole": "true"
+        },
+        "InWall_180_180_50_Cover": {
+            "EmulateFrame": "false",
+            "WhatToPrint": "cover",
+            "cover_screws_length": "160",
+            "cover_screws_width": "160",
+            "num_jacks": "4",
+            "num_rows": "4",
+            "panel_length": "180",
+            "panel_width": "180",
+            "rounding": "10.01",
+            "screw_head_diameter": "7",
+            "screw_hole_diameter": "4",
+            "screw_hole_lenght": "137",
+            "screw_hole_width": "137",
+            "sloted_angle": "45",
+            "use_cover": "true",
+            "use_sloted_hole": "true"
         }
     }
 }
