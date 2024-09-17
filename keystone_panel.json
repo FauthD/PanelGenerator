@@ -138,7 +138,7 @@
             "top_soffit": "true",
             "width_padding": "6.5625"
         },
-        "InWall_180_180_50": {
+        "InWall_159_159": {
             "EmulateFrame": "false",
             "WhatToPrint": "panel",
             "bottom_soffit": "true",
@@ -159,7 +159,7 @@
             "use_sloted_hole": "true",
             "wall_distance": "0"
         },
-        "InWall_180_180_50_extra_40": {
+        "InWall_159_159_extra_40": {
             "EmulateFrame": "false",
             "WhatToPrint": "panel",
             "bottom_soffit": "true",
@@ -180,7 +180,7 @@
             "use_sloted_hole": "true",
             "wall_distance": "40"
         },
-        "InWall_180_180_50_Cover": {
+        "InWall_159_159_Cover": {
             "EmulateFrame": "false",
             "WhatToPrint": "cover",
             "cover_screws_length": "160",

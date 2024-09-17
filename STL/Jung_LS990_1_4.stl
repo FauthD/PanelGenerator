@@ -5811,9 +5811,9 @@ solid OpenSCAD_Model
   endfacet
   facet normal 0 0 1
     outer loop
+      vertex 5.25 33.5 4.9995
       vertex -5.25 33.5 4.9995
       vertex 3 32 4.9995
-      vertex 5.25 33.5 4.9995
     endloop
   endfacet
   facet normal 0 0 1
@@ -5895,9 +5895,9 @@ solid OpenSCAD_Model
   endfacet
   facet normal 0 0 1
     outer loop
-      vertex -5.25 33.5 4.9995
       vertex -3 32 4.9995
       vertex 3 32 4.9995
+      vertex -5.25 33.5 4.9995
     endloop
   endfacet
   facet normal 0 0 1
@@ -5979,9 +5979,9 @@ solid OpenSCAD_Model
   endfacet
   facet normal 0 0 1
     outer loop
+      vertex 3 28 4.9995
       vertex -3 28 4.9995
       vertex 5.25 26.5 4.9995
-      vertex 3 28 4.9995
     endloop
   endfacet
   facet normal 0 1 0
@@ -5993,9 +5993,9 @@ solid OpenSCAD_Model
   endfacet
   facet normal 0 -1 0
     outer loop
+      vertex 5.25 33.5 6.005
       vertex -5.25 33.5 6.005
       vertex 5.25 33.5 4.9995
-      vertex 5.25 33.5 6.005
     endloop
   endfacet
   facet normal 0 -1 0
@@ -6021,9 +6021,9 @@ solid OpenSCAD_Model
   endfacet
   facet normal 0 -1 0
     outer loop
-      vertex -5.25 33.5 6.005
       vertex -5.25 33.5 4.9995
       vertex 5.25 33.5 4.9995
+      vertex -5.25 33.5 6.005
     endloop
   endfacet
   facet normal 0 0 1
@@ -6287,9 +6287,9 @@ solid OpenSCAD_Model
   endfacet
   facet normal 0 0 1
     outer loop
-      vertex -5.25 -26.5 4.9995
       vertex -3 -28 4.9995
       vertex 3 -28 4.9995
+      vertex -5.25 -26.5 4.9995
     endloop
   endfacet
   facet normal 0 0 1
@@ -6385,9 +6385,9 @@ solid OpenSCAD_Model
   endfacet
   facet normal 0 -1 0
     outer loop
-      vertex -5.25 -26.5 6.005
       vertex -5.25 -26.5 4.9995
       vertex 5.25 -26.5 4.9995
+      vertex -5.25 -26.5 6.005
     endloop
   endfacet
   facet normal 0 1 0
@@ -6406,9 +6406,9 @@ solid OpenSCAD_Model
   endfacet
   facet normal 0 0 1
     outer loop
+      vertex 3 -32 4.9995
       vertex -3 -32 4.9995
       vertex 5.25 -33.5 4.9995
-      vertex 3 -32 4.9995
     endloop
   endfacet
   facet normal 0 0 1

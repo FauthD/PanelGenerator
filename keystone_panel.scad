@@ -192,7 +192,7 @@ module keystone()
 	}
 }
 
-module mounting_holes()
+module mounting_holes(h=wall_height)
 {
 	// Draw the mounting holes
 	for (j = [1,-1] )
@@ -206,16 +206,16 @@ module mounting_holes()
 					l=1.5;
 					rotate([0,0,j*i*sloted_angle])
 					{
-						SlottedHole(d = screw_hole_diameter, h = 3*wall_height, length=l*screw_hole_diameter);
-						translate([0,0,wall_height/2])
-							SlottedHole(d = screw_head_diameter, h = wall_height, length=l*screw_head_diameter);
+						SlottedHole(d = screw_hole_diameter, h = 3*h, length=l*screw_hole_diameter);
+						translate([0,0,h/2])
+							SlottedHole(d = screw_head_diameter, h = h, length=l*screw_head_diameter);
 					}
 				}
 				else
 				{
-					cylinder(d = screw_hole_diameter, h = 3*wall_height, center=true);
-					translate([0,0,wall_height])
-						cylinder(d = screw_head_diameter, h = wall_height, center=true);
+					cylinder(d = screw_hole_diameter, h = 3*h, center=true);
+					translate([0,0,h])
+						cylinder(d = screw_head_diameter, h = h, center=true);
 				}
 			}
 		}
@@ -265,6 +265,34 @@ module raw_panel()
 			translate([0,0,-wall_distance/2])
 				RoundCornersCube([panel_length-2*cover_thickness, panel_width-2*cover_thickness, wall_distance+Epsilon], center=true, r=rounding);
 		}
+
+		// leads for the screws. Also reduces screw lenght.
+		h=wall_distance;
+		for (j = [1,-1] )
+		{
+			for (i = [1,-1] )
+			{
+				translate([j*screw_hole_lenght/2, i*screw_hole_width/2, -wall_distance])
+				{
+					if (use_sloted_hole)
+					{
+						l=1.5;
+						rotate([0,0,j*i*sloted_angle])
+						{
+							SlottedHole(d = 2*screw_head_diameter, h = h, length=l*screw_head_diameter);
+							offset=(panel_width-screw_hole_width)*1.414 - cover_thickness;
+							translate([0, 0, h])
+								cube([cover_thickness, offset, h/2], center=true);
+						}
+					}
+					else
+					{
+						translate([0,0,h/2])
+							cylinder(d = 2.5*screw_head_diameter, h = h, center=true);
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -285,6 +313,12 @@ module panel()
 				cube([panel_length-2*SlotDistance, panel_width-2*SlotDistance, SlotDept+Epsilon], center=true);
 				RoundCornersCube([panel_length-2*SlotDistance-2*SlotWidth, panel_width-2*SlotDistance-2*SlotWidth, SlotDept], center=true, r=rounding);
 			}
+		}
+		
+		if(wall_distance > 0)
+		{
+			translate([0,0, -wall_distance-wall_height/2])
+				mounting_holes(h=wall_distance);
 		}
 		
 		if(use_cover)
