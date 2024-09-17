@@ -27,14 +27,13 @@ Find the .stl files in the STL folder.
 
 | Panel for 12 keystones for a std. in wall box (Junction casing) with 159mm size | In wall box | A real photo | Description |
 | :----: | :----: | :----: | :----: |
-|![Panel for 12 keystones for a std. in wall box with 159mm sizes](PNG/InWall_159_159.png) | TBD photo for std. box | TBD | For Kaiser 1096-91, EAN 4013456152007. The holes for the cover mounting are prepared for M3 heat inserts. <img src="assets/kaiser-1096-91.png" alt="kaiser-1096-91" width="50%"> |
+|![Panel for 12 keystones for a std. in wall box with 159mm sizes](PNG/InWall_159_159.png) | ![Kaiser 1096-91](assets/kaiser-1096-91.png) | TBD | For Kaiser 1096-91, EAN 4013456152007. The holes for the cover mounting are prepared for M3 heat inserts.  |
 
 | Panel for 12 keystones for a std. in wall box (Junction casing) with 159mm size | In wall box | A real photo | Description |
 | :----: | :----: | :----: | :----: |
-|![Panel for 12 keystones for a std. in wall box with 159mm sizes](PNG/InWall_159_159_extra_40.png) | TBD photo for std. box | TBD | For Kaiser 1096-91, EAN 4013456152007. This also offers some extra space for cables.  The holes for the cover mounting are prepared for M3 heat inserts. |
+|![Panel for 12 keystones for a std. in wall box with 159mm sizes](PNG/InWall_159_159_extra_40.png) | ![Kaiser 1096-91](assets/kaiser-1096-91.png) | TBD | For Kaiser 1096-91, EAN 4013456152007. This also offers some extra space for cables.  The holes for the cover mounting are prepared for M3 heat inserts. |
 
 | Cover for 12 keystones for a std. in wall box (Junction casing) with 159mm size | Cover | A real photo | Description |
 | :----: | :----: | :----: | :----: |
-|![Panel for 12 keystones for a std. in wall box with 159mm sizes](PNG/InWall_159_159_Cover.png) | TBD photo for box | TBD | This is a cover to protect the short patch cables. |
+|![Panel for 12 keystones for a std. in wall box with 159mm sizes](PNG/InWall_159_159_Cover.png) | | TBD | This is a cover to protect the short patch cables. |
 
-![in wall 8_2](assets/inwall_8_2.jpg)
