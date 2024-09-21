@@ -52,6 +52,8 @@ screw_hole_lenght = 60;
 use_sloted_hole=true;
 // You can use 45° with 4 holes if you want
 sloted_angle=0;	// [0,45,90]
+// calculate the slot lenght based on diameter
+sloted_multiplier = 1.5;	// [1:0.25:5]
 
 /* 
  *  The soffits are the overhangs that make the front of the faceplate
@@ -203,12 +205,11 @@ module mounting_holes(h=wall_height)
 			{
 				if (use_sloted_hole)
 				{
-					l=1.5;
 					rotate([0,0,j*i*sloted_angle])
 					{
-						SlottedHole(d = screw_hole_diameter, h = 3*h, length=l*screw_hole_diameter);
+						SlottedHole(d = screw_hole_diameter, h = 3*h, length=sloted_multiplier*screw_hole_diameter);
 						translate([0,0,h/2])
-							SlottedHole(d = screw_head_diameter, h = h, length=l*screw_head_diameter);
+							SlottedHole(d = screw_head_diameter, h = h, length=sloted_multiplier*screw_hole_diameter);
 					}
 				}
 				else
