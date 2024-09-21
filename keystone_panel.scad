@@ -277,10 +277,9 @@ module raw_panel()
 				{
 					if (use_sloted_hole)
 					{
-						l=1.5;
 						rotate([0,0,j*i*sloted_angle])
 						{
-							SlottedHole(d = 2*screw_head_diameter, h = h, length=l*screw_head_diameter);
+							SlottedHole(d = 2*screw_head_diameter, h = h, length=sloted_multiplier*screw_hole_diameter);
 							offset=(panel_width-screw_hole_width)*1.414 - cover_thickness;
 							translate([0, 0, h])
 								cube([cover_thickness, offset, h/2], center=true);
