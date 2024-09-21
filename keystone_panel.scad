@@ -101,13 +101,13 @@ wall_thickness_y = width_padding;
 
 
 wall_height = 10;
-jack_length = 20.5;
+jack_length = 19.7; // was 20.5;
 jack_width = 15;
 
 catch_overhang = 2;
 small_clip_depth = catch_overhang;
 big_clip_depth = catch_overhang + 2;
-big_clip_clearance = 1.7;
+big_clip_clearance = 1.6; // was 1.7;
 small_clip_clearance = 6.5;
 
 outer_length = jack_length + big_clip_depth + (wall_thickness_x * 2);
@@ -188,7 +188,7 @@ module keystone()
 	{
 		translate([outer_length - wall_thickness_x, 0, wall_height - 2])
 			rotate([0, 0, -180])
-				clip_soffit(overhang = 4);
+				clip_soffit(overhang = 3.5);	// was 4
 	}
 }
 
