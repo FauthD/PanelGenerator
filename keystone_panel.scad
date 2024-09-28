@@ -264,7 +264,7 @@ module raw_panel()
 			translate([0,0,-wall_distance/2])
 				RoundCornersCube([panel_length, panel_width, wall_distance], center=true, r=rounding);
 			translate([0,0,-wall_distance/2])
-				RoundCornersCube([panel_length-2*cover_thickness, panel_width-2*cover_thickness, wall_distance+Epsilon], center=true, r=rounding);
+				RoundCornersCube([panel_length-2*cover_thickness, panel_width-2*cover_thickness, wall_distance+Epsilon], center=true, r=rounding-cover_thickness);
 		}
 
 		// leads for the screws. Also reduces screw lenght.
@@ -279,7 +279,7 @@ module raw_panel()
 					{
 						rotate([0,0,j*i*sloted_angle])
 						{
-							SlottedHole(d = 2*screw_head_diameter, h = h, length=sloted_multiplier*screw_hole_diameter);
+							SlottedHole(d = screw_head_diameter+2*1.5, h = h, length=sloted_multiplier*screw_hole_diameter);
 							offset=(panel_width-screw_hole_width)*1.414 - cover_thickness;
 							translate([0, 0, h])
 								cube([cover_thickness, offset, h/2], center=true);
@@ -303,7 +303,8 @@ module panel()
 		raw_panel();
 
 		if(screw_head_diameter>0)
-			mounting_holes();
+			translate([0,0, -2*wall_height])
+				mounting_holes(h=wall_distance);
 
 		if(EmulateFrame)
 		{
@@ -317,7 +318,7 @@ module panel()
 		
 		if(wall_distance > 0)
 		{
-			translate([0,0, -wall_distance-wall_height/2])
+			translate([0,0, -wall_distance-2*wall_height+3])
 				mounting_holes(h=wall_distance);
 		}
 		
