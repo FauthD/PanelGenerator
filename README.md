@@ -1,11 +1,11 @@
 # PanelGenerator
 Create panels for keystone with openscad. The panels do fit (somewhat) to the Jung LS990 series.
 
-Work in progress, do not use it yet, but feel free to review and comment.
+Feel free to review and comment.
 
 I used an existing generator (https://www.thingiverse.com/thing:1741072) as a starting point. Many mods where required.
 
-The required in-wall mounting box will also be included.
+The required in-wall mounting box is also included.
 
 Find the .stl files in the STL folder.
 
@@ -24,6 +24,10 @@ Find the .stl files in the STL folder.
 | Panel for 1 keystone fits to a real Jung LS990 frame | In wall box | A real photo | Description |
 | :----: | :----: | :----: | :----: |
 |![Panel for 1 keystone for Jung LS990 frame, no screws](PNG/Jung_LS990_1_1_ForFrameNoScrews.png) | ![In wall box for 1 keystone without mounting screws](PNG/Jung_LS990_1_4_Box.png) | TBD | You need to glue it to the frame somehow. Fits into a regular Jung LS990 frame. Screw distance is 60mm so it should also fit into regular boxes (64mm dept). E.g. Kaiser 1555-04. Or use the box for the 1_4 flavour. <img src="assets/kaiser-1555-04.png" alt="kaiser-1555-0" width="25%"> |
+
+| Panel for 1 keystone fits to a real Jung CD500 frame | In wall box | A real photo | Description |
+| :----: | :----: | :----: | :----: |
+|![Panel for 1 keystone for Jung CD500 frame, no screws](PNG/Jung_CD500_1_1_ForFrameNoScrews.png) | ![In wall box for 1 keystone without mounting screws](PNG/Jung_LS990_1_4_Box.png) | TBD | You need to glue it to the frame somehow. Fits into a regular Jung CD500 frame. Screw distance is 60mm so it should also fit into regular boxes (64mm dept). E.g. Kaiser 1555-04. Or use the box for the 1_4 flavour. <img src="assets/kaiser-1555-04.png" alt="kaiser-1555-0" width="25%"> |
 
 | Panel for 12 keystones for a std. in wall box (Junction casing) with 159mm size | In wall box | A real photo | Description |
 | :----: | :----: | :----: | :----: |
