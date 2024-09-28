@@ -303,8 +303,8 @@ module panel()
 		raw_panel();
 
 		if(screw_head_diameter>0)
-			translate([0,0, -2*wall_height])
-				mounting_holes(h=wall_distance);
+			translate([0,0, -wall_distance])
+				mounting_holes(h=wall_height+wall_distance);
 
 		if(EmulateFrame)
 		{
