@@ -139,6 +139,24 @@
             "top_soffit": "true",
             "width_padding": "6.5625"
         },
+        "Jung_CD500_1_1_ForFrameNoScrews": {
+            "BoxInsetLength": "3",
+            "BubbleLevelHelper": "true",
+            "EmulateFrame": "false",
+            "WhatToPrint": "panel",
+            "bottom_soffit": "true",
+            "num_jacks": "1",
+            "num_rows": "1",
+            "panel_length": "70.8",
+            "panel_width": "70.8",
+            "rounding": "5.0",
+            "screw_head_diameter": "0",
+            "screw_hole_diameter": "4.0",
+            "screw_hole_lenght": "0",
+            "screw_hole_width": "60.0",
+            "top_soffit": "true",
+            "width_padding": "6.5625"
+        },
         "InWall_159_159": {
             "EmulateFrame": "false",
             "WhatToPrint": "panel",
