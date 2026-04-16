@@ -41,3 +41,10 @@ Find the .stl files in the STL folder.
 | :----: | :----: | :----: | :----: |
 |![Panel for 12 keystones for a std. in wall box with 159mm sizes](PNG/InWall_159_159_Cover.png) | | TBD | This is a cover to protect the short patch cables. |
 
+| Panel for 18 keystones with 220x200mm size | Cover | A real photo | Description |
+| :----: | :----: | :----: | :----: |
+|![Panel for 18 keystones with 220x200mm size](PNG/Panel_220_200.png) | | TBD | Keystones have a larger distance as usual. |
+
+| Wall mount with 220x200mm size | Cover | A real photo | Description |
+| :----: | :----: | :----: | :----: |
+|![Wall mount with 220x200mm size](PNG/Panel_220_200_wall_mount.png) | | TBD | Housing to mount onto the wall. Screw holes are prepared for melt-in M3 nuts. There is also a big hole to bring the cables in.|

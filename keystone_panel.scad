@@ -22,7 +22,7 @@
  */
 
 /* [Print] */
-WhatToPrint = "panel"; // ["panel", "box", "cover", "wall_mount", "mount", "cut"]
+WhatToPrint = "panel"; // ["panel", "box", "cover", "wall_mount", "cut_panel_and_wall", "mount", "cut"]
 
 /* [Sizes] */
 // Number of columns 
@@ -442,6 +442,32 @@ module mount()
 	Stones();
 }
 
+module mount_panel_and_wall()
+{
+	h=cover_space+cover_thickness;
+
+	translate([0, 0, h])
+		print("panel");
+
+	color("blue", 0.1)
+		translate([0, 0, 0])
+			print("wall_mount");
+
+	// Stones();
+}
+
+module cut_panel_and_wall()
+{
+	h=cover_space+cover_thickness;
+
+	difference()
+	{
+		mount_panel_and_wall();
+		translate([0,0, h/2])
+			cube([panel_length/2+Epsilon, panel_width/2+Epsilon, h ]);
+	}
+}
+
 module cut()
 {
 	difference()
@@ -475,7 +501,11 @@ module print(what="panel")
 	{
 		wall_mount();
 	}
-	else if(what == "mount")
+	else if(what == "cut_panel_and_wall")
+	{
+		cut_panel_and_wall();
+	}
+		else if(what == "mount")
 	{
 		mount();
 	}
