@@ -22,7 +22,7 @@
  */
 
 /* [Print] */
-WhatToPrint = "panel"; // ["panel", "box", "cover", "mount", "cut"]
+WhatToPrint = "panel"; // ["panel", "box", "cover", "wall_mount", "mount", "cut"]
 
 /* [Sizes] */
 // Number of columns 
@@ -46,13 +46,13 @@ screw_hole_diameter = 4.0;	//[2.0:0.1:6.0]
 // Set head diameter to 0 for no screws
 screw_head_diameter = 7.0;	//[0.0:0.1:11.0]
 screw_hole_width = 110;
-screw_hole_lenght = 60;
+screw_hole_length = 60;
 
 // Allow for mounting tolereances
 use_sloted_hole=true;
 // You can use 45° with 4 holes if you want
 sloted_angle=0;	// [0,45,90]
-// calculate the slot lenght based on diameter
+// calculate the slot length based on diameter
 sloted_multiplier = 1.5;	// [1:0.25:5]
 
 /* 
@@ -64,6 +64,7 @@ top_soffit = true;
 bottom_soffit = true;
 /***************/
 
+/* [Jung] */
 EmulateFrame = false;
 SlotWidth = 1.1;	
 SlotDistance = 4.1;
@@ -73,7 +74,7 @@ SlotDept=4;
 wall_distance = 0.0; // [0.0:1:100]
 wall_distance_thickness = 2.0; // [1:0.2:4]
 
-/* [Cover] */
+/* [Cover and wall mount] */
 use_cover=false;
 cover_space = 80.0; // [8.0:1:15.0]
 cover_screws_width = 110;
@@ -81,6 +82,12 @@ cover_screws_length = 60;
 cover_screws_diameter = 4.0;	//[2.0:0.1:6.0]
 cover_screw_head_diameter = 7.5;	//[0.0:0.1:11.0]
 cover_thickness = 2.0; // [1:0.2:4]
+
+/* [Wall mount] */
+mounting_screw_diameter=4.5;
+backside_hole_diameter=0;
+backside_hole_pos_length=0;
+backside_hole_pos_width=0;
 
 /* [Wall box] */
 // Material thickness
@@ -201,7 +208,7 @@ module mounting_holes(h=wall_height)
 	{
 		for (i = [1,-1] )
 		{
-			translate([j*screw_hole_lenght/2, i*screw_hole_width/2, 0])
+			translate([j*screw_hole_length/2, i*screw_hole_width/2, 0])
 			{
 				if (use_sloted_hole)
 				{
@@ -267,13 +274,13 @@ module raw_panel()
 				RoundCornersCube([panel_length-2*cover_thickness, panel_width-2*cover_thickness, wall_distance+Epsilon], center=true, r=rounding-cover_thickness);
 		}
 
-		// leads for the screws. Also reduces screw lenght.
+		// leads for the screws. Also reduces screw length.
 		h=wall_distance;
 		for (j = [1,-1] )
 		{
 			for (i = [1,-1] )
 			{
-				translate([j*screw_hole_lenght/2, i*screw_hole_width/2, -wall_distance])
+				translate([j*screw_hole_length/2, i*screw_hole_width/2, -wall_distance])
 				{
 					if (use_sloted_hole)
 					{
@@ -398,6 +405,32 @@ module cover()
 	}
 }
 
+module wall_mount()
+{
+	h=cover_space+cover_thickness;
+	offset = 20;
+	difference()
+	{
+		cover_raw(h);
+		for (j = [1,-1])
+		{
+			for (i = [1,-1])
+			{
+				translate([j*cover_screws_length/2, i*cover_screws_width/2, 0])
+					cylinder(d=cover_screws_diameter, h=3*h, center=true);
+
+				translate([j*cover_screws_length/2-j*offset, i*cover_screws_width/2-i*offset, 0])
+					cylinder(d=cover_screws_diameter, h=3*h, center=true);
+			}
+		}
+		if (backside_hole_diameter>0)
+		{
+			translate([backside_hole_pos_width, backside_hole_pos_length, cover_thickness])
+				cylinder(d=backside_hole_diameter, h=h, center=true);
+		}
+	}
+}
+
 module mount()
 {
 	print("panel");
@@ -431,12 +464,16 @@ module print(what="panel")
 	else if(what == "box")
 	{
 		outer = [panel_length-2*BoxInsetLength, screw_hole_width+BoxThickness, BoxDept];
-		screws= [screw_hole_lenght, screw_hole_width, screw_hole_diameter];
+		screws= [screw_hole_length, screw_hole_width, screw_hole_diameter];
 		box(outer=outer, thickness=BoxThickness, screws=screws);
 	}
 	else if(what == "cover")
 	{
 		cover();
+	}
+	else if(what == "wall_mount")
+	{
+		wall_mount();
 	}
 	else if(what == "mount")
 	{
