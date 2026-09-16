@@ -76,7 +76,7 @@ wall_distance_thickness = 2.0; // [1:0.2:4]
 
 /* [Cover and wall mount] */
 use_cover=false;
-cover_space = 80.0; // [8.0:1:15.0]
+cover_space = 80.0; // [8.0:1:200.0]
 cover_screws_width = 110;
 cover_screws_length = 60;
 cover_screws_diameter = 4.0;	//[2.0:0.1:6.0]
@@ -405,22 +405,59 @@ module cover()
 	}
 }
 
+MountHeight=7;
+
+module wall_mount_raw(h)
+{
+	// Draw the cover.
+	difference()
+	{
+		translate([0, 0, h/2])
+			RoundCornersCube([panel_length, panel_width, h], center=true, r=rounding);
+
+		translate([0, 0, h/2+cover_thickness])
+			RoundCornersCube([panel_length-2*cover_thickness, panel_width-2*cover_thickness, h], center=true, r=rounding-cover_thickness);
+	}	
+
+	// These mounting post print much faster
+	for(j=[1,-1])
+	{
+		for(i=[-1,1])
+		{
+			h1 = MountHeight;
+			translate([j*cover_screws_length/2, i*cover_screws_width/2, h-h1/2])
+				cylinder(d=2.5*cover_screw_head_diameter, h=h1, center=true);
+
+			// enforce holes for cover
+			hull()
+			{
+				translate([j*cover_screws_length/2, i*cover_screws_width/2, h-h1])
+					cylinder(d=2.5*cover_screw_head_diameter, h=h1/2, center=true);
+
+				translate([j*(panel_length/2-rounding/2), i*(panel_width/2-rounding/2), h-h1/2-2.5*cover_screw_head_diameter])
+					sphere(d=cover_thickness);
+			}
+		}
+	}
+}
+
 module wall_mount()
 {
 	h=cover_space+cover_thickness;
+	h1 = MountHeight;
 	offset = 20;
 	difference()
 	{
-		cover_raw(h);
+		wall_mount_raw(h);
 		for (j = [1,-1])
 		{
 			for (i = [1,-1])
 			{
-				translate([j*cover_screws_length/2, i*cover_screws_width/2, 0])
-					cylinder(d=cover_screws_diameter, h=3*h, center=true);
+				translate([j*cover_screws_length/2, i*cover_screws_width/2, h-h1/2+Epsilon])
+					cylinder(d=cover_screws_diameter, h=h1, center=true);
 
 				translate([j*cover_screws_length/2-j*offset, i*cover_screws_width/2-i*offset, 0])
-					cylinder(d=cover_screws_diameter, h=3*h, center=true);
+					cylinder(d=screw_hole_diameter, h=3*h, center=true);
 			}
 		}
 		if (backside_hole_diameter>0)
