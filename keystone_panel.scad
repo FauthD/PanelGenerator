@@ -5,7 +5,7 @@
 	Add Epsilon.
 	Lots of other improvements.
 	Changed the way a panel is setup so it fits to my needs.
-	Drawback is that a std. 19" panel is a bit more difficuölt to create,
+	Drawback is that a std. 19" panel is a bit more difficult to create,
 	but my panels are much easier.
 */
 
@@ -54,6 +54,9 @@ use_sloted_hole=true;
 sloted_angle=0;	// [0,45,90]
 // calculate the slot length based on diameter
 sloted_multiplier = 1.5;	// [1:0.25:5]
+
+// Some space for labels
+use_labels=false;
 
 /* 
  *  The soffits are the overhangs that make the front of the faceplate
@@ -340,6 +343,26 @@ module panel()
 						cylinder(d=cover_screws_diameter, h=3*h, center=true);
 				}
 			}
+		}
+
+		if(use_labels)
+		{
+			height_padding=10;
+			
+			dept=1.0;
+			l=total_outer_width-jack_width;
+			w=10;
+			for (n = [0:1:num_rows-1])
+			{
+				translate([total_outer_length/2 -5 - n*outer_length, 0, -dept/2+wall_height+Epsilon])
+					cube([w, l, dept], center=true);
+			}
+			// debugging tools
+			// cube([70,50,30], center=true);
+
+			// a marker shows the top side
+			// translate([panel_length/2-2, 0, -dept/2+wall_height+Epsilon])
+			// 	cylinder(d=2, h=dept, center=true);
 		}
 	}
 }
